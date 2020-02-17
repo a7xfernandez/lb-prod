@@ -1,5 +1,6 @@
-import {Entity, model, property, belongsTo} from '@loopback/repository';
-import {Department} from './department.model';
+import { Entity, model, property, belongsTo, hasOne } from '@loopback/repository';
+import { Department } from './department.model';
+import { Address, AddressRelations } from './address.model';
 
 @model()
 export class Student extends Entity {
@@ -30,6 +31,9 @@ export class Student extends Entity {
   @belongsTo(() => Department)
   departmentId: number;
 
+  @hasOne(() => Address)
+  address: Address;
+
   constructor(data?: Partial<Student>) {
     super(data);
   }
@@ -37,6 +41,7 @@ export class Student extends Entity {
 
 export interface StudentRelations {
   // describe navigational properties here
+  address?: AddressRelations;
 }
 
 export type StudentWithRelations = Student & StudentRelations;
